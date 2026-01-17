@@ -1,0 +1,301 @@
+/* === Base & Background === */
+body {
+    font-family: 'Rubik', sans-serif;
+    background: url('../static/bg-stars.jpg') repeat; /* 👈 Your starry background image */
+    background-size: cover;
+    margin: 0;
+    padding: 20px;
+    color: #f8f9fa;
+    animation: fadeInBody 1s ease-in;
+}
+
+
+/* === Container (animated entrance) === */
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    animation: zoomFade 0.8s ease-in-out;
+}
+
+
+/* === Animated Title === */
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    text-align: center;
+    letter-spacing: 1px;
+    animation: pulseTitle 1.2s ease;
+}
+
+/* === Subtitle */
+h1 + p {
+    text-align: center;
+    color: #444;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+/* === Labels & Inputs === */
+label {
+    font-weight: 600;
+    margin-top: 10px;
+    display: inline-block;
+    color: #2c3e50;
+}
+
+input[type="file"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    font-size: 1em;
+    transition: 0.3s;
+}
+
+input[type="submit"],
+.button {
+    margin-top: 20px;
+    padding: 12px 22px;
+    font-size: 1em;
+    background: linear-gradient(90deg, #1dd1a1, #10ac84);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+input[type="submit"]:hover,
+.button:hover {
+    background: linear-gradient(90deg, #10ac84, #1dd1a1);
+    transform: translateY(-2px);
+}
+
+/* === Results === */
+.result {
+    margin-top: 15px;
+    padding: 15px;
+    background: #e3f2fd;
+    border-left: 5px solid #1e88e5;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.result:hover {
+    transform: scale(1.02);
+}
+
+.plot {
+    margin-top: 25px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px 20px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    input[type="submit"],
+    .button {
+        width: 100%;
+        font-size: 1em;
+    }
+    select, input[type="file"]{
+        font-size: 1em;
+    }
+
+    .plot{
+        overflow-x:auto;
+    }
+}
+
+/* === Animations === */
+@keyframes fadeInBody {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomFade {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseTitle {
+    0% {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* === Dark Mode === */
+body.dark-mode {
+    background: #0a0f1b;
+    color: #e0e0e0;
+}
+
+.container.dark-mode-box {
+    background: #1b1f2f;
+    color: #e0e0e0;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode label,
+.dark-mode h1,
+.dark-mode h2 {
+    color: #e0e0e0;
+}
+
+.dark-toggle {
+    float: right;
+    margin-top: -35px;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    background: #3742fa;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.dark-toggle:hover {
+    background: #2f3542;
+}
+
+/* === Loader Animation === */
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #10ac84;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    z-index: 9999;
+    display: none;
+}
+
+.loader.hidden {
+    display: none !important;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* === Enhanced Responsive Fixes === */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    h1 + p {
+        font-size: 1em;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    label {
+        font-size: 0.95em;
+    }
+
+    select,
+    input[type="file"],
+    input[type="submit"],
+    .button {
+        width: 100%;
+        font-size: 1em;
+    }
+
+    .result {
+        font-size: 0.95em;
+        padding: 12px;
+    }
+
+    .plot {
+        overflow-x: auto;
+    }
+
+    .dark-toggle {
+        display: block;
+        float: none;
+        margin: 10px auto 0 auto;
+        font-size: 0.9em;
+        padding: 8px 16px;
+        width: fit-content;
+    }
+
+    .subtitle {
+        font-size: 1em;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.4em;
+    }
+
+    .dark-toggle {
+        font-size: 0.85em;
+        padding: 6px 12px;
+    }
+
+    .subtitle {
+        font-size: 0.9em;
+    }
+}

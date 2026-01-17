@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>🪐 Exoplanet Transit Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Dark Mode Toggle Script -->
+    <script>
+    function toggleDarkMode() {
+        const body = document.body;
+        const container = document.querySelector('.container');
+        body.classList.toggle("dark-mode");
+        container.classList.toggle("dark-mode-box");
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🪐 Exoplanet Detection Tool</h1>
+        <button onclick="toggleDarkMode()" class="dark-toggle">🌗 Toggle Dark Mode</button>
+        <p style="text-align:center; color: #666; font-size: 1.1em;">Upload your Kepler light curves and classify potential exoplanets with deep learning</p>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="model-select">Select Model:</label><br>
+            <select id="model-select" name="model" required title="Choose a model for exoplanet detection">
+                <option value="cnn" {% if model_selected == "cnn" %}selected{% endif %}>CNN</option>
+                <option value="cnn_lstm" {% if model_selected == "cnn_lstm" %}selected{% endif %}>CNN + LSTM</option>
+            </select>
+
+            <br><br>
+
+            <label for="file-input">Upload CSV light curve files (Kepler format):</label><br>
+            <input id="file-input" type="file" name="file" multiple required title="Upload one or more CSV files containing light curve data">
+
+            <br><br>
+            <input type="submit" value="🔍 Classify Exoplanets">
+        </form>
+
+        {% if results %}
+            <hr>
+            <h2>🔬 Classification Results</h2>
+            <form method="POST" action="{{ url_for('main.download_pdf') }}">
+                {% for result in results %}
+                    <div class="result">
+                        <strong>{{ result.filename }}</strong>: {{ result.prediction }}
+                        <br>Confidence: {{ result.confidence }}
+                        <input type="hidden" name="filename[]" value="{{ result.filename }}">
+                        <input type="hidden" name="prediction[]" value="{{ result.prediction }}">
+                        <input type="hidden" name="confidence[]" value="{{ result.confidence }}">
+                        <input type="hidden" name="model_used" value="{{ model_selected }}">
+                    </div>
+                {% endfor %}
+                <br>
+                <input type="submit" value="📄 Download PDF Report" class="button">
+            </form>
+
+            <h2>📈 Light Curve Plots</h2>
+            {% for plot in plots %}
+                <div class="plot">{{ plot|safe }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div id="loader" class="loader hidden"></div>
+    
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const loader = document.getElementById("loader");
+
+    form.addEventListener("submit", function (e) {
+      loader.classList.remove("hidden"); // 👈 SHOWS loader
+
+      // Let browser repaint first
+      setTimeout(() => {
+        form.submit(); // 👈 then actually submit
+      }, 50); // enough to render loader
+      e.preventDefault(); // 👈 PREVENT default sync form submit
+    });
+  });
+</script>
+
+
+</body>
+</html>
