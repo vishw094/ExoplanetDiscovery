@@ -1,0 +1,9 @@
+Flask==2.3.2
+gunicorn
+tensorflow
+pandas
+numpy
+plotly
+kaleido
+fpdf2==2.7.6
+scikit-learn

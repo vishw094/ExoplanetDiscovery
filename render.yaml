@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ExoplanetDetection
+    env: docker
+    repo: https://github.com/040532/ExoplanetDiscovery
+    branch: main
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /
